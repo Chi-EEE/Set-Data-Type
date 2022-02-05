@@ -4,19 +4,18 @@
 public class Set
 {
 public:
-	Set(int x) {
-		keys = (new std::string[x]);
-		entries = (new std::string[x]);
+	Set(int size) {
+		this->size = size;
+		keys = (new std::string[size]);
 	};
 	~Set() {
-		delete keys;
+		delete[] keys;
 	}
-	void add(std::string key, std::string entry);
-
-	void contains(std::string key, std::string entry);
-
+	void add(std::string key);
+	bool contains(std::string key);
+	void removeAll(Set otherSet);
 private:
+	int size = 0;
 	int count = 0;
 	std::string* keys;
-	std::string* entries;
 };
