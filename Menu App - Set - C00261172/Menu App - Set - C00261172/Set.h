@@ -14,6 +14,7 @@ public:
 	void add(std::string key);
 	bool contains(std::string key);
 	void removeAll(Set otherSet);
+	void print();
 private:
 	int size = 0;
 	int count = 0;

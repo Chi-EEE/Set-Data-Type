@@ -2,7 +2,7 @@
 #include <iostream>
 
 void Set::add(std::string key) {
-	if (count + 1 < size)
+	if (count < size)
 	{
 		if (!contains(key))
 		{
@@ -41,4 +41,10 @@ void Set::removeAll(Set otherSet) {
 	delete[] keys;
 	count = newCount;
 	keys = newSet;
+}
+
+void Set::print() {
+	for (int i = 0; i < count; i++) {
+		std::cout << "[" << i << "]" << " = " << keys[i] << "\n";
+	}
 }
