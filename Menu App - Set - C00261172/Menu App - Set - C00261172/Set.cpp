@@ -1,5 +1,4 @@
 #include "Set.h"
-#include <iostream>
 
 void Set::add(std::string key) {
 	if (count < size)
@@ -28,19 +27,16 @@ bool Set::contains(std::string key) {
 	return false;
 }
 
-void Set::removeAll(Set otherSet) {
-	std::string* newSet = (new std::string[size]);
-	int newCount = 0;
+void Set::removeAll(Set &otherSet) {
+	delete[] keys;
+	count = 0;
+	keys = (new std::string[size]);
 	for (int i = 0; i < count; i++) {
 		bool found = otherSet.contains(keys[i]);
 		if (!found) {
-			newSet[newCount] = keys[i];
-			newCount++;
+			add(keys[i]);
 		}
 	}
-	delete[] keys;
-	count = newCount;
-	keys = newSet;
 }
 
 void Set::print() {

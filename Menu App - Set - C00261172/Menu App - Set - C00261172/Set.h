@@ -1,5 +1,6 @@
 #pragma once
 #include <string>
+#include <iostream>
 
 public class Set
 {
@@ -13,8 +14,9 @@ public:
 	}
 	void add(std::string key);
 	bool contains(std::string key);
-	void removeAll(Set otherSet);
+	void removeAll(Set& otherSet);
 	void print();
+	std::string* getKeys() { return keys; }
 private:
 	int size = 0;
 	int count = 0;
