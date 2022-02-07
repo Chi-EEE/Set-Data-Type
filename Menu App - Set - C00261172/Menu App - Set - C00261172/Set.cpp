@@ -28,15 +28,17 @@ bool Set::contains(std::string key) {
 }
 
 void Set::removeAll(Set &otherSet) {
-	delete[] keys;
+	std::string* previousKeys = keys;
+	int previousCount = count;
 	count = 0;
 	keys = (new std::string[size]);
 	for (int i = 0; i < count; i++) {
-		bool found = otherSet.contains(keys[i]);
+		bool found = otherSet.contains(previousKeys[i]);
 		if (!found) {
-			add(keys[i]);
+			add(previousKeys[i]);
 		}
 	}
+	delete[] previousKeys;
 }
 
 void Set::print() {

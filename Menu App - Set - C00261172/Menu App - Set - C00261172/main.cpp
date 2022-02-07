@@ -1,3 +1,8 @@
+/// <summary>
+/// Name: Huu Chi Huynh
+/// Date: 07/02/2022
+/// </summary>
+
 #include "Set.h"
 #include <iostream>
 
@@ -18,8 +23,6 @@ int main() {
 
 	set1.print();
 
-	std::cout << "Set1:" << set1.getKeys() << "\n";
-
 	std::cout << "\n";
 
 	Set set2 = Set{ 5 };
@@ -31,11 +34,8 @@ int main() {
 	set2.add("Program");
 
 	set2.print();
-	std::cout << "Set2:" << set2.getKeys() << "\n";
 
 	set1.removeAll(set2);
-
-	std::cout << "Set1:" << set1.getKeys() << "\n";
 	set1.print();
 	std::cout << "\n";
 
