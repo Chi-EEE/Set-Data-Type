@@ -5,6 +5,10 @@
 public class Set
 {
 public:
+	Set() {
+		this->size = 1;
+		keys = (new std::string[1]);
+	};
 	Set(int size) {
 		this->size = size;
 		keys = (new std::string[size]);

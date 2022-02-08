@@ -3,11 +3,14 @@
 /// Date: 07/02/2022
 /// </summary>
 
+#include "Menu.h"
 #include "Set.h"
 #include <iostream>
 
 int main() {
-	Set set1 = Set{ 10 };
+	Menu menu = Menu{};
+	menu.run();
+	/*Set set1 = Set{ 10 };
 
 	set1.add("Hello");
 	set1.add("World");
@@ -37,7 +40,7 @@ int main() {
 
 	set1.removeAll(set2);
 	set1.print();
-	std::cout << "\n";
+	std::cout << "\n";*/
 
 	system("pause");
 	return 0;
