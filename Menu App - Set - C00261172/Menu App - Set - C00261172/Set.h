@@ -18,7 +18,7 @@ public:
 	}
 	void add(std::string key);
 	bool contains(std::string key);
-	void removeAll(Set& otherSet);
+	void removeAll(Set* otherSet);
 	void print();
 	std::string* getKeys() { return keys; }
 private:

@@ -1,5 +1,41 @@
 #include "Menu.h"
 
+void Menu::run() {
+	int selection = 0;
+	while (true) // MAIN LOOP
+	{
+		while (true)
+		{
+			std::cout << "Text based Menu for Set class by Chi\n\t1) Create Set\n\t2) Add to Set\n\t3) Print Set\n\t4) Remove All from Set\n";
+			std::cin >> selection;
+			if (!std::cin.fail()) {
+				break;
+			}
+			std::cout << "Error: Numbers only.\n" << std::endl;
+			std::cin.clear();
+			std::cin.ignore(256, '\n');
+		}
+		switch (selection)
+		{
+		case 1:
+			createSet();
+			break;
+		case 2:
+			addToSet();
+			break;
+		case 3:
+			printSet();
+			break;
+		case 4:
+			removeAllFromSet();
+			break;
+		default:
+			std::cout << "Invalid Selection\n\n";
+			break;
+		}
+	}
+}
+
 void Menu::createSet() {
 	std::string setName;
 	int setSize = 1;
@@ -59,7 +95,7 @@ void Menu::addToSet() {
 	while (true)
 	{
 		std::string value;
-		std::cout << "Please enter the value that you are going to put into the Set '" << setName << "'\n";
+		std::cout << "Please enter the value that you are going to put into the Set '" << setName << "':\n";
 		std::cin >> value;
 		std::cout << "\n";
 		sets[setName]->add(value);
@@ -67,6 +103,56 @@ void Menu::addToSet() {
 			return; // EXIT FUNCTION
 		}
 	}
+}
+
+void Menu::printSet() {
+	listSets();
+	std::string setName;
+
+	while (true)
+	{
+		std::cout << "Enter the name of your set: ";
+		std::cin >> setName;
+		// This if statement checks if the name of the set is in the map
+		if (sets.find(setName) != sets.end()) {
+			break;
+		}
+		if (!continueOperation("\nSet not found")) {
+			return; // EXIT FUNCTION
+		}
+	}
+	sets[setName]->print();
+	std::cout << "\n";
+}
+
+void Menu::removeAllFromSet() {
+	std::string set1Name;
+	std::string set2Name;
+	while (true)
+	{
+		std::cout << "Enter the name of your first set: ";
+		std::cin >> set1Name;
+		// This if statement checks if the name of the set is in the map
+		if (sets.find(set1Name) != sets.end()) {
+			break;
+		}
+		if (!continueOperation("\nSet not found")) {
+			return; // EXIT FUNCTION
+		}
+	}
+	while (true)
+	{
+		std::cout << "Enter the name of your second set: ";
+		std::cin >> set2Name;
+		// This if statement checks if the name of the set is in the map
+		if (sets.find(set2Name) != sets.end()) {
+			break;
+		}
+		if (!continueOperation("\nSet not found")) {
+			return; // EXIT FUNCTION
+		}
+	}
+	sets[set1Name]->removeAll(sets[set2Name]);
 }
 
 void Menu::listSets() {
@@ -78,33 +164,4 @@ void Menu::listSets() {
 	}
 	setsString = setsString + "||\n\n";
 	std::cout << "Set Names: " << setsString;
-}
-
-void Menu::run() {
-	int selection = 0;
-	while (true) // MAIN LOOP
-	{
-		while (true)
-		{
-			std::cout << "Text based Menu for Set class by Chi\n\n\t1) Create Set\n\t2) Add to Set\n\n";
-			std::cin >> selection;
-			if (!std::cin.fail()) {
-				break;
-			}
-			std::cout << "Error: Numbers only.\n" << std::endl;
-			std::cin.clear();
-			std::cin.ignore(256, '\n');
-		}
-		switch (selection)
-		{
-		case 1:
-			createSet();
-			break;
-		case 2:
-			addToSet();
-		default:
-			std::cout << "Invalid Selection\n\n";
-			break;
-		}
-	}
 }

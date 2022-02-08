@@ -27,13 +27,13 @@ bool Set::contains(std::string key) {
 	return false;
 }
 
-void Set::removeAll(Set &otherSet) {
+void Set::removeAll(Set* otherSet) {
 	std::string* previousKeys = keys;
 	int previousCount = count;
 	count = 0;
 	keys = (new std::string[size]);
 	for (int i = 0; i < count; i++) {
-		bool found = otherSet.contains(previousKeys[i]);
+		bool found = otherSet->contains(previousKeys[i]);
 		if (!found) {
 			add(previousKeys[i]);
 		}

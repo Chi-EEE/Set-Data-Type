@@ -10,10 +10,12 @@ public:
 	~Menu() {
 		sets.erase(sets.begin(), sets.end());
 	}
+	void run();
 	void createSet();
 	void addToSet();
+	void printSet();
+	void removeAllFromSet();
 	void listSets();
-	void run();
 
 private:
 	std::map<std::string, Set*> sets;
