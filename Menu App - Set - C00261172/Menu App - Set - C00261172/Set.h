@@ -24,5 +24,7 @@ public:
 private:
 	int size = 0;
 	int count = 0;
+
+	// When debugging, the size of the keys are set from the constructor
 	std::string* keys;
 };
