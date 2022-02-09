@@ -27,7 +27,7 @@ bool Set::contains(std::string key) {
 	return false;
 }
 
-void Set::removeAll(Set* otherSet) {
+void Set::removeAll(std::unique_ptr<Set> &otherSet) {
 	std::string* previousKeys = keys;
 	int previousCount = count;
 	count = 0;

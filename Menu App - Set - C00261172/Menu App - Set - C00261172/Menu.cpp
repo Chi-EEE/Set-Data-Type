@@ -52,7 +52,7 @@ void Menu::createSet() {
 		std::cin.clear();
 		std::cin.ignore(256, '\n');
 	}
-	sets[setName] = new Set{ setSize };
+	sets[setName] = std::make_unique<Set>(setSize);
 }
 
 /// <summary>
@@ -158,7 +158,7 @@ void Menu::removeAllFromSet() {
 void Menu::listSets() {
 	std::string setsString;
 	// Loop through all of the values inside of the sets map
-	for (std::map<std::string, Set*>::iterator iter = sets.begin(); iter != sets.end(); ++iter)
+	for (std::map<std::string, std::unique_ptr<Set>>::iterator iter = sets.begin(); iter != sets.end(); ++iter)
 	{
 		setsString = setsString + "||" + iter->first;
 	}

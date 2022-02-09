@@ -2,7 +2,7 @@
 #include <string>
 #include <iostream>
 
-public class Set
+class Set
 {
 public:
 	Set() {
@@ -18,7 +18,7 @@ public:
 	}
 	void add(std::string key);
 	bool contains(std::string key);
-	void removeAll(Set* otherSet);
+	void removeAll(std::unique_ptr<Set> &otherSet);
 	void print();
 	std::string* getKeys() { return keys; }
 private:

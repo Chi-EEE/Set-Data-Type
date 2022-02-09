@@ -4,7 +4,7 @@
 #include <iostream>
 #include <map>
 
-public class Menu
+class Menu
 {
 public:
 	~Menu() {
@@ -18,6 +18,6 @@ public:
 	void listSets();
 
 private:
-	std::map<std::string, Set*> sets;
+	std::map<std::string, std::unique_ptr<Set>> sets;
 };
 
