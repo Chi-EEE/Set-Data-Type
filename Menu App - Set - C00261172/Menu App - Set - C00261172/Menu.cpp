@@ -13,10 +13,11 @@ void Menu::run() {
 			if (!std::cin.fail()) {
 				break;
 			}
-			std::cout << "Error: Numbers only.\n" << std::endl;
+			std::cout << "Error: Numbers only.\n\n";
 			std::cin.clear();
 			std::cin.ignore(256, '\n');
 		}
+		std::cout << "\n";
 		switch (selection)
 		{
 		case 1:
@@ -53,7 +54,7 @@ void Menu::createSet() {
 		if (!std::cin.fail()) {
 			break;
 		}
-		std::cout << "Error: Numbers only." << std::endl;
+		std::cout << "Error: Numbers only.\n\n";
 		std::cin.clear();
 		std::cin.ignore(256, '\n');
 	}
@@ -138,7 +139,14 @@ void Menu::containsInSet() {
 
 	std::cout << "\n";
 	if (sets[setName]->contains(input)) {
+		SetConsoleTextAttribute(hConsole, GREEN);
 		std::cout << "Found '" << input << "' inside of the Set: " << setName << "\n";
+		SetConsoleTextAttribute(hConsole, WHITE);
+	}
+	else {
+		SetConsoleTextAttribute(hConsole, RED);
+		std::cout << "'" << input << "' wasn't found inside of the Set: " << setName << "\n";
+		SetConsoleTextAttribute(hConsole, WHITE);
 	}
 	std::cout << "\n";
 }
@@ -156,7 +164,7 @@ bool Menu::continueOperation(std::string error) {
 			break;
 		}
 		SetConsoleTextAttribute(hConsole, RED);
-		std::cout << "Error: 0 or 1" << std::endl;
+		std::cout << "Error: 0 or 1\n\n";
 		SetConsoleTextAttribute(hConsole, WHITE);
 		std::cin.clear();
 		std::cin.ignore(256, '\n');
@@ -179,6 +187,7 @@ std::string Menu::askForSet(std::string index) {
 			return ""; // EXIT FUNCTION
 		}
 	}
+	std::cout << "\n";
 	return setName;
 }
 
