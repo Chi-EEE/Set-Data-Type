@@ -13,7 +13,7 @@ void Menu::run() {
 			if (!std::cin.fail()) {
 				break;
 			}
-			std::cout << "Error: Numbers only.\n\n";
+			SendError("Error: Numbers only.\n\n");
 			std::cin.clear();
 			std::cin.ignore(256, '\n');
 		}
@@ -34,6 +34,9 @@ void Menu::run() {
 			break;
 		case 5:
 			containsInSet();
+			break;
+		case 6:
+			removeFromSet();
 			break;
 		default:
 			std::cout << "Invalid Selection\n\n";
@@ -74,16 +77,12 @@ void Menu::createSet() {
 		if (!std::cin.fail()) {
 			break;
 		}
-		SetConsoleTextAttribute(hConsole, RED); // Set the colour of the text
-		std::cout << "Error: Numbers only.\n\n";
-		SetConsoleTextAttribute(hConsole, WHITE);
+		SendError("Error: Numbers only.\n");
 		std::cin.clear();
 		std::cin.ignore(256, '\n');
 	}
 	sets[setName] = std::make_unique<Set>(setSize); // Create a unique pointer for the set
-	SetConsoleTextAttribute(hConsole, GREEN);
-	std::cout << "Set: " << setName << " | Size: " << setSize << " was created.\n";
-	SetConsoleTextAttribute(hConsole, WHITE);
+	SendSuccess("Set: " + setName + " | Size: " + std::to_string(setSize) + " was created.\n");
 }
 
 /// <summary>
@@ -108,23 +107,13 @@ void Menu::addToSet() {
 		std::cout << "\n";
 		switch (sets[setName]->add(value)) {
 		case SetResult::Success:
-			SetConsoleTextAttribute(hConsole, GREEN);
-			std::cout << "Successfully added '" << value << "' to Set: " << setName << "\n";
-			SetConsoleTextAttribute(hConsole, WHITE);
+			SendSuccess("Successfully added '" + value + "' to Set: " + setName + "\n");
 			break;
 		case SetResult::AlreadyIn:
-			SetConsoleTextAttribute(hConsole, RED);
-			std::cout << "Unable to add '" << value << "' to Set: " << setName << "\n";
-			SetConsoleTextAttribute(hConsole, GREY);
-			std::cout << "Key is already inside of the Set.\n";
-			SetConsoleTextAttribute(hConsole, WHITE);
+			SendError("Unable to add '" + value + "' to Set: " + setName + "\n", "Key is already inside of the Set.\n");
 			break;
 		case SetResult::Full:
-			SetConsoleTextAttribute(hConsole, RED);
-			std::cout << "Unable to add '" << value << "' to Set: " << setName << "\n";
-			SetConsoleTextAttribute(hConsole, GREY);
-			std::cout << "Set is full.\n";
-			SetConsoleTextAttribute(hConsole, WHITE);
+			SendError("Unable to add '" + value + "' to Set: " + setName + "\n", "Set is full.\n");
 			break;
 		}
 		if (!continueOperation("")) {
@@ -180,14 +169,10 @@ void Menu::containsInSet() {
 
 	std::cout << "\n";
 	if (sets[setName]->contains(input)) {
-		SetConsoleTextAttribute(hConsole, GREEN);
-		std::cout << "Found '" << input << "' inside of the Set: " << setName << "\n";
-		SetConsoleTextAttribute(hConsole, WHITE);
+		SendSuccess("Found '" + input + "' inside of the Set: " + setName + "\n");
 	}
 	else {
-		SetConsoleTextAttribute(hConsole, RED);
-		std::cout << "'" << input << "' wasn't found inside of the Set: " << setName << "\n";
-		SetConsoleTextAttribute(hConsole, WHITE);
+		SendError("'" + input + "' wasn't found inside of the Set: " + setName + "\n");
 	}
 	std::cout << "\n";
 }
@@ -199,20 +184,18 @@ void Menu::removeFromSet() {
 
 	setName = askForSet("");
 	if (setName == "") { return; }
+	sets[setName]->print();
+	std::cout << "\n";
 
 	std::cout << "Enter a value you want to remove from theSet: " << setName << "\n";
 	std::cin >> input;
 
 	std::cout << "\n";
 	if (sets[setName]->remove(input)) {
-		SetConsoleTextAttribute(hConsole, GREEN);
-		std::cout << "'" << input << "' was removed from the Set: " << setName << "\n";
-		SetConsoleTextAttribute(hConsole, WHITE);
+		SendSuccess("'" + input + "' was removed from the Set: " + setName + "\n");
 	}
 	else {
-		SetConsoleTextAttribute(hConsole, RED);
-		std::cout << "'" << input << "' wasn't found inside of the Set: " << setName << "\n";
-		SetConsoleTextAttribute(hConsole, WHITE);
+		SendError("'" + input + "' wasn't found inside of the Set: " + setName + "\n");
 	}
 }
 
@@ -228,9 +211,7 @@ bool Menu::continueOperation(std::string error) {
 		if (!std::cin.fail()) {
 			break;
 		}
-		SetConsoleTextAttribute(hConsole, RED);
-		std::cout << "Error: 0 or 1\n\n";
-		SetConsoleTextAttribute(hConsole, WHITE);
+		SendError("Error: 0 or 1\n\n");
 		std::cin.clear();
 		std::cin.ignore(256, '\n');
 	}
@@ -278,4 +259,24 @@ void Menu::listSets() {
 	}
 	setsString = setsString + "||\n\n";
 	std::cout << "Set Names: " << setsString;
+}
+
+void Menu::SendSuccess(std::string successMessage) {
+	SetConsoleTextAttribute(hConsole, GREEN);
+	std::cout << successMessage;
+	SetConsoleTextAttribute(hConsole, WHITE);
+}
+
+void Menu::SendError(std::string errorMessage) {
+	SetConsoleTextAttribute(hConsole, RED);
+	std::cout << errorMessage;
+	SetConsoleTextAttribute(hConsole, WHITE);
+}
+
+void Menu::SendError(std::string errorMessage, std::string extraMessage) {
+	SetConsoleTextAttribute(hConsole, RED);
+	std::cout << errorMessage;
+	SetConsoleTextAttribute(hConsole, GREY);
+	std::cout << extraMessage;
+	SetConsoleTextAttribute(hConsole, WHITE);
 }

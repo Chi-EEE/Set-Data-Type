@@ -68,8 +68,8 @@ bool Set::remove(std::string key) {
 		for (int i = indexFound; i < count - 1; i++) {
 			keys[i] = keys[i + 1];
 		}
-		keys[count] = "";
 		count--;
+		keys[count] = "";
 		return true;
 	}
 	return false;

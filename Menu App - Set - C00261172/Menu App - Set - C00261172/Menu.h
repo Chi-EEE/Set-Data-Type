@@ -30,5 +30,8 @@ private:
 	bool findSet(std::string setName);
 	std::string askForSet(std::string index);
 	void listSets();
+	void SendSuccess(std::string successMessage);
+	void SendError(std::string errorMessage);
+	void SendError(std::string errorMessage, std::string extraMessage);
 };
 
