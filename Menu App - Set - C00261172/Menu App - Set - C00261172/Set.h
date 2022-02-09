@@ -24,8 +24,9 @@ public:
 	}
 	SetResult add(std::string key);
 	bool contains(std::string key);
-	void removeAll(std::unique_ptr<Set> &otherSet);
+	int removeAll(std::unique_ptr<Set> &otherSet);
 	void print();
+	bool remove(std::string key);
 private:
 	int size = 0;
 	int count = 0;

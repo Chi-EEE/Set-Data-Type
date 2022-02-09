@@ -19,12 +19,15 @@ public:
 	void removeAllFromSet();
 	void containsInSet();
 
+	void removeFromSet();
+
 private:
 	HANDLE hConsole;
 
 	std::map<std::string, std::unique_ptr<Set>> sets;
 
 	bool continueOperation(std::string error);
+	bool findSet(std::string setName);
 	std::string askForSet(std::string index);
 	void listSets();
 };
