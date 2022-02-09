@@ -187,16 +187,24 @@ void Menu::removeFromSet() {
 	sets[setName]->print();
 	std::cout << "\n";
 
-	std::cout << "Enter a value you want to remove from theSet: " << setName << "\n";
-	std::cin >> input;
+	while (true) {
+		while (true) {
+			std::cout << "Enter a value you want to remove from the Set: " << setName << "\n";
+			std::cin >> input;
+			if (sets[setName]->remove(input)) {
+				break;
+			}
+			SendError("'" + input + "' wasn't found inside of the Set: " + setName + "\n");
+			if (!continueOperation("")) {
+				return;
+			}
+		}
+		SendSuccess("'" + input + "' was removed from the Set: " + setName + "\n\n");
+		if (!continueOperation("")) {
+			return;
+		}
+	}
 
-	std::cout << "\n";
-	if (sets[setName]->remove(input)) {
-		SendSuccess("'" + input + "' was removed from the Set: " + setName + "\n");
-	}
-	else {
-		SendError("'" + input + "' wasn't found inside of the Set: " + setName + "\n");
-	}
 }
 
 /// <summary>
