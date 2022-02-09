@@ -1,20 +1,20 @@
 #include "Set.h"
 
-void Set::add(std::string key) {
+SetResult Set::add(std::string key) {
 	if (count < size)
 	{
 		if (!contains(key))
 		{
-			std::cout << "Added " << key << " at index " << count << " in Set of size " << size << "\n";
 			keys[count] = key;
 			count++;
+			return SetResult::Success;
 		}
 		else {
-			std::cout << "Unable to add key: '" << key << "'. Key is already valid in the Set of size: " << size << "\n";
+			return SetResult::AlreadyIn;
 		}
 	}
 	else {
-		std::cout << "Unable to add key: '" << key << "'. Attempt to add key at index " << count << " with Set of size: " << size << "\n";
+		return SetResult::Full;
 	}
 }
 
@@ -42,6 +42,7 @@ void Set::removeAll(std::unique_ptr<Set> &otherSet) {
 }
 
 void Set::print() {
+	std::cout << "Set contents: \n";
 	for (int i = 0; i < count; i++) {
 		std::cout << "[" << i << "]" << " = " << keys[i] << "\n";
 	}

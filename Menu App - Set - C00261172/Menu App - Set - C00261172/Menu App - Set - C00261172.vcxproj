@@ -144,6 +144,7 @@
     <ClCompile Include="Set.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Colour.h" />
     <ClInclude Include="Menu.h" />
     <ClInclude Include="Set.h" />
   </ItemGroup>

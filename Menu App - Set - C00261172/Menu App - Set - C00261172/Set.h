@@ -2,6 +2,12 @@
 #include <string>
 #include <iostream>
 
+enum class SetResult {
+	Success,
+	Full,
+	AlreadyIn
+};
+
 class Set
 {
 public:
@@ -16,11 +22,10 @@ public:
 	~Set() {
 		delete[] keys;
 	}
-	void add(std::string key);
+	SetResult add(std::string key);
 	bool contains(std::string key);
 	void removeAll(std::unique_ptr<Set> &otherSet);
 	void print();
-	std::string* getKeys() { return keys; }
 private:
 	int size = 0;
 	int count = 0;
