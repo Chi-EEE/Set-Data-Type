@@ -26,9 +26,9 @@ public:
 	void clearSet();
 
 private:
-	HANDLE hConsole;
+	HANDLE hConsole; // Console window
 
-	std::unordered_map<std::string, std::unique_ptr<Set>> sets;
+	std::unordered_map<std::string, std::unique_ptr<Set>> sets; // Set storage
 
 	bool continueOperation();
 	bool findSet(std::string setName);
