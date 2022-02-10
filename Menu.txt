@@ -1,6 +1,0 @@
-Create Set with size
-add string to Set
-print Set
-RemoveAll
-Contains
-help
