@@ -26,6 +26,7 @@ public:
 	bool contains(std::string key);
 	int removeAll(std::unique_ptr<Set> &otherSet);
 	void print();
+	int search(std::string key);
 	bool remove(std::string key);
 private:
 	int size = 0;

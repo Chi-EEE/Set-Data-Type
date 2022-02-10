@@ -8,7 +8,8 @@ void Menu::run() {
 	{
 		while (true) // Loop to check if user has inputted correct data type
 		{
-			std::cout << "Text based Menu for Set class by Chi\n\t1) Create Set\n\t2) Add to Set\n\t3) Print Set\n\t4) Remove All from Set\n\t5) Contains in Set\n\t6) Remove From Set\n";
+			// Starting text
+			std::cout << "Text based Menu for Set class by Chi\n\t1) Create Set\n\t2) Add to Set\n\t3) Print Set\n\t4) Remove All from Set\n\t5) Contains in Set\n\t6) Remove From Set\n\nEnter an Option: ";
 			std::cin >> selection;
 			if (!std::cin.fail()) {
 				break;
@@ -18,7 +19,7 @@ void Menu::run() {
 			std::cin.ignore(256, '\n');
 		}
 		std::cout << "\n";
-		switch (selection)
+		switch (selection) // Menu system
 		{
 		case 1:
 			createSet();
@@ -67,12 +68,13 @@ void Menu::createSet() {
 		if (!findSet(setName)) { // Check if set isn't inside of the map
 			break;
 		}
-		if (!continueOperation("\nAnother Set with the same name was already made.")) {
+		SendError("\nAnother Set with the same name was already made.\n\n");
+		if (!continueOperation()) {
 			return; // EXIT FUNCTION
 		}
 	}
 	while (true) {
-		std::cout << "\nEnter the size of the new set: ";
+		std::cout << "\nEnter the size of the new set: \n";
 		std::cin >> setSize;
 		if (!std::cin.fail()) {
 			break;
@@ -82,7 +84,7 @@ void Menu::createSet() {
 		std::cin.ignore(256, '\n');
 	}
 	sets[setName] = std::make_unique<Set>(setSize); // Create a unique pointer for the set
-	SendSuccess("Set: " + setName + " | Size: " + std::to_string(setSize) + " was created.\n");
+	SendSuccess("Set: " + setName + " | Size: " + std::to_string(setSize) + " was created.\n\n");
 }
 
 /// <summary>
@@ -116,7 +118,7 @@ void Menu::addToSet() {
 			SendError("Unable to add '" + value + "' to Set: " + setName + "\n", "Set is full.\n");
 			break;
 		}
-		if (!continueOperation("")) {
+		if (!continueOperation()) {
 			return; // EXIT FUNCTION
 		}
 	}
@@ -150,7 +152,7 @@ void Menu::removeAllFromSet() {
 	setName2 = askForSet("[2] ");
 	if (setName2 == "") { return; }
 
-	std::cout << "Removed " << sets[setName1]->removeAll(sets[setName2]) << " keys inside of the Set: " << setName1 << "\n";
+	SendSuccess("Removed " + std::to_string(sets[setName1]->removeAll(sets[setName2])) + " keys inside of the Set: " + setName1 + "\n\n");
 }
 
 /// <summary>
@@ -177,6 +179,13 @@ void Menu::containsInSet() {
 	std::cout << "\n";
 }
 
+/// <summary>
+/// Ask user for set.
+/// If they have entered a valid Set then
+/// Ask user to delete a key from the Set,
+/// If the key isn't found then warn them
+/// If the key is found then remove the key from the Set and send them a success message
+/// </summary>
 void Menu::removeFromSet() {
 	listSets();
 	std::string setName;
@@ -194,13 +203,13 @@ void Menu::removeFromSet() {
 			if (sets[setName]->remove(input)) {
 				break;
 			}
-			SendError("'" + input + "' wasn't found inside of the Set: " + setName + "\n");
-			if (!continueOperation("")) {
+			SendError("'" + input + "' wasn't found inside of the Set: " + setName + "\n\n");
+			if (!continueOperation()) {
 				return;
 			}
 		}
 		SendSuccess("'" + input + "' was removed from the Set: " + setName + "\n\n");
-		if (!continueOperation("")) {
+		if (!continueOperation()) {
 			return;
 		}
 	}
@@ -211,15 +220,15 @@ void Menu::removeFromSet() {
 /// Ask user if they would like to continue operation
 /// </summary>
 /// <returns>True = continue/ False = stop</returns>
-bool Menu::continueOperation(std::string error) {
+bool Menu::continueOperation() {
 	bool continueOp = false;
 	while (true) {
-		std::cout << error << "\nWould you like to continue:\n\t0 = No\n\t1 = Yes\n";
+		std::cout << "Would you like to continue:\n\t0 = No\n\t1 = Yes\n\nEnter an Option: ";
 		std::cin >> continueOp;
 		if (!std::cin.fail()) {
 			break;
 		}
-		SendError("Error: 0 or 1\n\n");
+		SendError("\nError: 0 or 1\n\n");
 		std::cin.clear();
 		std::cin.ignore(256, '\n');
 	}
@@ -227,6 +236,11 @@ bool Menu::continueOperation(std::string error) {
 	return continueOp;
 }
 
+/// <summary>
+/// Checks if the set is available in the map
+/// </summary>
+/// <param name="setName">Set Name</param>
+/// <returns>True = Found | False = not Found</returns>
 bool Menu::findSet(std::string setName) {
 	return sets.find(setName) != sets.end();
 }
@@ -248,7 +262,8 @@ std::string Menu::askForSet(std::string index) {
 		if (findSet(setName)) {
 			break;
 		}
-		if (!continueOperation("\nSet not found.")) {
+		SendError("\nSet not found.\n\n");
+		if (!continueOperation()) {
 			return ""; // EXIT FUNCTION
 		}
 	}
@@ -269,18 +284,31 @@ void Menu::listSets() {
 	std::cout << "Set Names: " << setsString;
 }
 
+/// <summary>
+/// Send success message with green colour
+/// </summary>
+/// <param name="successMessage"></param>
 void Menu::SendSuccess(std::string successMessage) {
 	SetConsoleTextAttribute(hConsole, GREEN);
 	std::cout << successMessage;
 	SetConsoleTextAttribute(hConsole, WHITE);
 }
 
+/// <summary>
+/// Send error message with red colour
+/// </summary>
+/// <param name="errorMessage"></param>
 void Menu::SendError(std::string errorMessage) {
 	SetConsoleTextAttribute(hConsole, RED);
 	std::cout << errorMessage;
 	SetConsoleTextAttribute(hConsole, WHITE);
 }
 
+/// <summary>
+/// Send Error message with red and grey colour
+/// </summary>
+/// <param name="errorMessage"></param>
+/// <param name="extraMessage"></param>
 void Menu::SendError(std::string errorMessage, std::string extraMessage) {
 	SetConsoleTextAttribute(hConsole, RED);
 	std::cout << errorMessage;

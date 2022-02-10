@@ -1,5 +1,14 @@
 #include "Set.h"
 
+/// <summary>
+/// Check if the count is less than size,
+/// If not then return SetResult::Full.
+/// If less then check if the key is not inside of the keys array.
+/// If found then return SetResult::AlreadyIn.
+/// Else add the key to the keys array and increase the count returning SetResult::Success
+/// </summary>
+/// <param name="key"></param>
+/// <returns></returns>
 SetResult Set::add(std::string key) {
 	if (count < size)
 	{
@@ -7,7 +16,7 @@ SetResult Set::add(std::string key) {
 		{
 			keys[count] = key;
 			count++;
-			return SetResult::Success;
+			return SetResult::Success; // Returning this enum for Menu app
 		}
 		else {
 			return SetResult::AlreadyIn;
@@ -18,6 +27,13 @@ SetResult Set::add(std::string key) {
 	}
 }
 
+/// <summary>
+/// Loops through the keys array using linear search 
+/// checking if the key param is equal to the looped key
+/// If the key is found inside of the array then return true else false
+/// </summary>
+/// <param name="key"></param>
+/// <returns>True = found | False = not found</returns>
 bool Set::contains(std::string key) {
 	for (int i = 0; i < count; i++) {
 		if (keys[i] == key) {
@@ -27,6 +43,16 @@ bool Set::contains(std::string key) {
 	return false;
 }
 
+/// <summary>
+/// Keep reference of previous keys array and previous count.
+/// Reset the current keys and count.
+/// Loop through the previous keys array and check if it is inside of the other set.
+/// If the key isnt found inside of the other set then add that key to keys array
+/// After finished looping through previous keys array,
+/// Delete the previous keys array and return the amount of keys removed
+/// </summary>
+/// <param name="otherSet">Other set to compare and remove the current Set's keys</param>
+/// <returns>Amount of keys removed</returns>
 int Set::removeAll(std::unique_ptr<Set> &otherSet) {
 	std::string* previousKeys = keys;
 	int previousCount = count;
@@ -38,10 +64,13 @@ int Set::removeAll(std::unique_ptr<Set> &otherSet) {
 			add(previousKeys[i]);
 		}
 	}
-	delete[] previousKeys;
-	return previousCount - count;
+	delete[] previousKeys; // Delete previous keys array
+	return previousCount - count; // Amount of keys removed from the keys array
 }
 
+/// <summary>
+/// Go through the keys array printing all of the Set contents
+/// </summary>
 void Set::print() {
 	std::cout << "Set contents: \n";
 	for (int i = 0; i < count; i++) {
@@ -50,27 +79,43 @@ void Set::print() {
 }
 
 /// <summary>
-/// Searches through the keys array and if the key passed in the function is found then
-/// Loop from its index to count - 1 replacing the current key with the next key
+/// Searches through the keys array using linear search and if the key passed in the function is found then
+/// return the index of the key + 1
+/// 
+/// TAKE 1 away from RESULT
 /// </summary>
 /// <param name="key"></param>
-/// <returns></returns>
-bool Set::remove(std::string key) {
-	int indexFound = 0;
+/// <returns>keyIndex + 1 [Take 1 away from it to get index]</returns>
+int Set::search(std::string key) {
+	int indexFound = 0; // If key isn't found then indexFound will be 0 which is false
 	for (int i = 0; i < count; i++) {
 		if (keys[i] == key) {
 			indexFound = i + 1;
 			break;
 		}
 	}
+	return indexFound; // - 1 if in use
+}
+
+/// <summary>
+/// Loop from its index to count - 1 replacing the current key with the next key
+/// </summary>
+/// <param name="key"></param>
+/// <returns></returns>
+bool Set::remove(std::string key) {
+	int indexFound = search(key); // No need to check if the count is equal to or below 0
 	if (indexFound) {
 		indexFound -= 1;
+		// Loop from the indexFound to the count - 1 moving the key of i + 1 to index i
 		for (int i = indexFound; i < count - 1; i++) {
 			keys[i] = keys[i + 1];
 		}
 		count--;
+
+		// The count index will always be the an empty string when this happens.
+		// And to ensure that the program doesn't index outside of the keys array
 		keys[count] = "";
-		return true;
+		return true; // Return if remove is successful
 	}
 	return false;
 }

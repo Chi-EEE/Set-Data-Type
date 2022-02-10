@@ -26,7 +26,7 @@ private:
 
 	std::map<std::string, std::unique_ptr<Set>> sets;
 
-	bool continueOperation(std::string error);
+	bool continueOperation();
 	bool findSet(std::string setName);
 	std::string askForSet(std::string index);
 	void listSets();
