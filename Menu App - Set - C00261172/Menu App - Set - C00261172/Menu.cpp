@@ -29,7 +29,7 @@ void Menu::run() {
 		while (true) // Loop to check if user has inputted correct data type
 		{
 			// Starting text
-			std::cout << "Text based Menu for Set class by Chi\n\t1) Create Set\n\t2) Add to Set\n\t3) Print Set\n\t4) Remove All from Set\n\t5) Contains in Set\n\t6) Remove From Set\n\t7) Search in Set\n\t8) Clear Set\n\t9) Generate 3 - 5 Set\n\nEnter an Option: ";
+			std::cout << "Text based Menu for Set class by Chi\n\t1) Create Set\n\t2) Add to Set\n\t3) Print Set\n\t4) Remove All from Set\n\t5) Contains in Set\n\t6) Remove From Set\n\t7) Search in Set\n\t8) Clear Set\n\t9) Generate 3 - 5 Sets\n\nEnter an Option: ";
 			std::cin >> selection;
 			if (!std::cin.fail()) {
 				break;
@@ -81,7 +81,8 @@ void Menu::run() {
 void Menu::generateSets()
 {
 	std::srand(static_cast<unsigned>(time(nullptr)));		//Initalise random seed
-	for (int i = 0; i < 3 + rand() % 3; i++) { // Generate 3 - 5 sets
+	int amountOfSets = 3 + rand() % 3;
+	for (int i = 0; i < amountOfSets; i++) { // Generate 3 - 5 sets
 		std::string randomString = random_string(5);	// Random 5 characters
 		int randomSize = 1 + rand() % 5;						// Make set with random 1 to 5 size
 		sets[randomString] = std::make_unique<Set>(randomSize);	// Create a unique pointer for the set with size of random
@@ -89,6 +90,7 @@ void Menu::generateSets()
 			sets[randomString]->add(random_string(5));
 		}
 	}
+	SendSuccess(std::to_string(amountOfSets) + " Sets have been generated.\n\n");
 }
 
 /// <summary>
