@@ -2,7 +2,7 @@
 #include "Set.h"
 
 #include <iostream>
-#include <map>			// Map data type for storing Sets
+#include <unordered_map>// Map data type for storing Sets
 #include <windows.h>	// WinApi header
 #include "Colour.h"		// Colours for the console
 
@@ -18,13 +18,14 @@ public:
 	void printSet();
 	void removeAllFromSet();
 	void containsInSet();
-
 	void removeFromSet();
+	void searchInSet();
+	void clearSet();
 
 private:
 	HANDLE hConsole;
 
-	std::map<std::string, std::unique_ptr<Set>> sets;
+	std::unordered_map<std::string, std::unique_ptr<Set>> sets;
 
 	bool continueOperation();
 	bool findSet(std::string setName);

@@ -19,6 +19,7 @@ public:
 		this->size = size;
 		keys = (new std::string[size]);
 	};
+
 	~Set() {
 		delete[] keys;
 	}
@@ -28,6 +29,7 @@ public:
 	void print();
 	int search(std::string key);
 	bool remove(std::string key);
+	void clear();
 private:
 	int size = 0;
 	int count = 0;

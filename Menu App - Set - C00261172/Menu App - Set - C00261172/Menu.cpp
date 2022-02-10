@@ -9,7 +9,7 @@ void Menu::run() {
 		while (true) // Loop to check if user has inputted correct data type
 		{
 			// Starting text
-			std::cout << "Text based Menu for Set class by Chi\n\t1) Create Set\n\t2) Add to Set\n\t3) Print Set\n\t4) Remove All from Set\n\t5) Contains in Set\n\t6) Remove From Set\n\nEnter an Option: ";
+			std::cout << "Text based Menu for Set class by Chi\n\t1) Create Set\n\t2) Add to Set\n\t3) Print Set\n\t4) Remove All from Set\n\t5) Contains in Set\n\t6) Remove From Set\n\t7) Search in Set\n\t8) Clear Set\n\nEnter an Option: ";
 			std::cin >> selection;
 			if (!std::cin.fail()) {
 				break;
@@ -39,6 +39,12 @@ void Menu::run() {
 		case 6:
 			removeFromSet();
 			break;
+		case 7:
+			searchInSet();
+			break;
+		case 8:
+			clearSet();
+			break;
 		default:
 			std::cout << "Invalid Selection\n\n";
 			break;
@@ -55,7 +61,7 @@ void Menu::run() {
 /// If the inputted value is not a number then
 /// repeat the question.
 /// If not then create the set with the given values with
-/// Set name being the index for the map to reference by and
+/// Set name being the index for the unordered_map to reference by and
 /// Set Size being the size of the set
 /// </summary>
 void Menu::createSet() {
@@ -65,7 +71,7 @@ void Menu::createSet() {
 	while (true) {
 		std::cout << "Enter the name of the new set: ";
 		std::cin >> setName;
-		if (!findSet(setName)) { // Check if set isn't inside of the map
+		if (!findSet(setName)) { // Check if set isn't inside of the unordered_map
 			break;
 		}
 		SendError("\nAnother Set with the same name was already made.\n\n");
@@ -217,6 +223,53 @@ void Menu::removeFromSet() {
 }
 
 /// <summary>
+/// Ask user for set,
+/// Ask user for key to find in set.
+/// If key is found in Set then print out it's index position
+/// Else send error
+/// </summary>
+void Menu::searchInSet() {
+	listSets();
+	std::string setName;
+	std::string input;
+
+	setName = askForSet("");
+	if (setName == "") { return; }
+	sets[setName]->print();
+	std::cout << "\n";
+	
+	int keyIndex = 0;
+
+	while (true) {
+		std::cout << "Enter a value that will want to find it's index in the Set: " << setName << "\n";
+		std::cin >> input;
+		keyIndex = sets[setName]->search(input);
+		if (keyIndex) {
+			break;
+		}
+		SendError("'" + input + "' wasn't found inside of the Set: " + setName + "\n\n");
+		if (!continueOperation()) {
+			return;
+		}
+	}
+	SendSuccess("'" + input + "' was found inside of the Set: " + setName + " at index position: " + std::to_string(keyIndex) + "\n\n");
+}
+
+/// <summary>
+/// Ask user for set and clear the set
+/// </summary>
+void Menu::clearSet() {
+	listSets();
+	std::string setName;
+
+	setName = askForSet("");
+	if (setName == "") { return; }
+	sets[setName]->clear();
+
+	SendSuccess("Set: '" + setName + "' was cleared!\n\n");
+}
+
+/// <summary>
 /// Ask user if they would like to continue operation
 /// </summary>
 /// <returns>True = continue/ False = stop</returns>
@@ -237,7 +290,7 @@ bool Menu::continueOperation() {
 }
 
 /// <summary>
-/// Checks if the set is available in the map
+/// Checks if the set is available in the unordered_map
 /// </summary>
 /// <param name="setName">Set Name</param>
 /// <returns>True = Found | False = not Found</returns>
@@ -258,7 +311,7 @@ std::string Menu::askForSet(std::string index) {
 	{
 		std::cout << index << "Enter the name of your set: ";
 		std::cin >> setName;
-		// This if statement checks if the name of the set is in the map
+		// This if statement checks if the name of the set is in the unordered_map
 		if (findSet(setName)) {
 			break;
 		}
@@ -272,11 +325,11 @@ std::string Menu::askForSet(std::string index) {
 }
 
 /// <summary>
-/// Loop through all of the keys inside of the sets map
+/// Loop through all of the keys inside of the sets unordered_map
 /// </summary>
 void Menu::listSets() {
 	std::string setsString;
-	for (std::map<std::string, std::unique_ptr<Set>>::iterator iter = sets.begin(); iter != sets.end(); ++iter)
+	for (std::unordered_map<std::string, std::unique_ptr<Set>>::iterator iter = sets.begin(); iter != sets.end(); ++iter)
 	{
 		setsString = setsString + "||" + iter->first;
 	}
@@ -287,7 +340,7 @@ void Menu::listSets() {
 /// <summary>
 /// Send success message with green colour
 /// </summary>
-/// <param name="successMessage"></param>
+/// <param name="successMessage">Raw string</param>
 void Menu::SendSuccess(std::string successMessage) {
 	SetConsoleTextAttribute(hConsole, GREEN);
 	std::cout << successMessage;
@@ -297,7 +350,7 @@ void Menu::SendSuccess(std::string successMessage) {
 /// <summary>
 /// Send error message with red colour
 /// </summary>
-/// <param name="errorMessage"></param>
+/// <param name="errorMessage">Raw string</param>
 void Menu::SendError(std::string errorMessage) {
 	SetConsoleTextAttribute(hConsole, RED);
 	std::cout << errorMessage;
@@ -307,8 +360,8 @@ void Menu::SendError(std::string errorMessage) {
 /// <summary>
 /// Send Error message with red and grey colour
 /// </summary>
-/// <param name="errorMessage"></param>
-/// <param name="extraMessage"></param>
+/// <param name="errorMessage">Raw string</param>
+/// <param name="extraMessage">Raw string</param>
 void Menu::SendError(std::string errorMessage, std::string extraMessage) {
 	SetConsoleTextAttribute(hConsole, RED);
 	std::cout << errorMessage;

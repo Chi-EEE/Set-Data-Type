@@ -119,3 +119,14 @@ bool Set::remove(std::string key) {
 	}
 	return false;
 }
+
+/// <summary>
+/// Reset count to 0 and
+/// Delete all keys array and create a new one
+/// [Not to be used with removeAll]
+/// </summary>
+void Set::clear() {
+	count = 0;
+	delete[] keys;
+	keys = (new std::string[size]);
+}
