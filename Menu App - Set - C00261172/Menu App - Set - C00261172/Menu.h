@@ -3,9 +3,10 @@
 
 #include <iostream>
 #include <unordered_map>// Map data type for storing Sets
-#include <windows.h>	// WinApi header
+#include <windows.h>	// WinApi header (Colours)
+#include <ctime>		// Current time for random
+#include <algorithm>	// For generating random string
 #include "Colour.h"		// Colours for the console
-
 class Menu
 {
 public:
@@ -13,6 +14,7 @@ public:
 		sets.erase(sets.begin(), sets.end());
 	}
 	void run();
+	void generateSets();
 	void createSet();
 	void addToSet();
 	void printSet();
