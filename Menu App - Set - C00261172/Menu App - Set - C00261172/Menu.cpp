@@ -11,8 +11,7 @@ std::string random_string(size_t length)
 	{
 		const char charset[] =
 			"0123456789"
-			"ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-			"abcdefghijklmnopqrstuvwxyz";
+			"ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 		const size_t max_index = (sizeof(charset) - 1);
 		return charset[rand() % max_index];
 	};
