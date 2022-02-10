@@ -296,7 +296,7 @@ void Menu::searchInSet() {
 			return;
 		}
 	}
-	SendSuccess("'" + input + "' was found inside of the Set: " + setName + " at index position: " + std::to_string(keyIndex) + "\n\n");
+	SendSuccess("'" + input + "' was found inside of the Set: " + setName + " at index position: " + std::to_string(keyIndex - 1) + "\n\n");
 }
 
 /// <summary>
