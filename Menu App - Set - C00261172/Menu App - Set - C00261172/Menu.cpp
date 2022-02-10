@@ -69,7 +69,7 @@ void Menu::run() {
 			generateSets();
 			break;
 		default:
-			std::cout << "Invalid Selection\n\n";
+			SendError("Invalid Selection\n\n");
 			break;
 		}
 	}
