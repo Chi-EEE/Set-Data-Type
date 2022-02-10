@@ -29,7 +29,7 @@ void Menu::run() {
 		while (true) // Loop to check if user has inputted correct data type
 		{
 			// Starting text
-			std::cout << "Text based Menu for Set class by Chi\n\t1) Create Set\n\t2) Add to Set\n\t3) Print Set\n\t4) Remove All from Set\n\t5) Contains in Set\n\t6) Remove From Set\n\t7) Search in Set\n\t8) Clear Set\n\t9) Generate 3 - 5 Sets\n\nEnter an Option: ";
+			std::cout << "Text based Menu for Set class by Chi\n\t1) Create Set\n\t2) Add to Set\n\t3) Print Set\n\t4) Remove All from Set\n\t5) Contains in Set\n\t6) Remove From Set\n\t7) Search in Set\n\t8) Clear Set\n\t9) Equals Set\n\t10) Generate 3 - 5 Sets\n\nEnter an Option: ";
 			std::cin >> selection;
 			if (!std::cin.fail()) {
 				break;
@@ -66,6 +66,9 @@ void Menu::run() {
 			clearSet();
 			break;
 		case 9:
+			equalsSet();
+			break;
+		case 10:
 			generateSets();
 			break;
 		default:
@@ -308,6 +311,29 @@ void Menu::clearSet() {
 	sets[setName]->clear();
 
 	SendSuccess("Set: '" + setName + "' was cleared!\n\n");
+}
+
+/// <summary>
+/// Ask user for two set names and call the Set equals method with the second Set as the parameter
+///	If the first set equals second set then
+/// Send success else Send error
+/// </summary>
+void Menu::equalsSet() {
+	listSets();
+	std::string setName1;
+	std::string setName2;
+
+	setName1 = askForSet("[1] ");
+	if (setName1 == "") { return; }
+	setName2 = askForSet("[2] ");
+	if (setName2 == "") { return; }
+
+	if (sets[setName1]->equals(sets[setName2])) {
+		SendSuccess("Set: '" + setName1 + "' equals to Set: " + setName2 + "!\n\n");
+	}
+	else {
+		SendError("Set: '" + setName1 + "' does not equals to Set: " + setName2 + "!\n\n");
+	}
 }
 
 /// <summary>

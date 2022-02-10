@@ -30,6 +30,10 @@ public:
 	int search(std::string key);
 	bool remove(std::string key);
 	void clear();
+	bool equals(std::unique_ptr<Set>& otherSet);
+
+	const int getSize() { return size; }
+	const int getCount() { return count; }
 
 private:
 	int size = 0;

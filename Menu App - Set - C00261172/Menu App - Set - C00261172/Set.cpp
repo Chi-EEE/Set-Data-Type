@@ -130,3 +130,21 @@ void Set::clear() {
 	delete[] keys;
 	keys = (new std::string[size]);
 }
+
+/// <summary>
+/// Checks if the current set is equal to the other Set by
+/// Looping through the current Set and checking if the other set doesn't contain the key
+/// </summary>
+/// <param name="otherSet"></param>
+/// <returns></returns>
+bool Set::equals(std::unique_ptr<Set>& otherSet) {
+	if (otherSet->getCount() == count && otherSet->getSize()) {
+		for (int i = 0; i < count; i++) {
+			if (!otherSet->contains(keys[i])) {
+				return false;
+			}
+		}
+		return true;
+	}
+	return false;
+}

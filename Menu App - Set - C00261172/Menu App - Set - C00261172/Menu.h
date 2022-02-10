@@ -24,6 +24,7 @@ public:
 	void removeFromSet();
 	void searchInSet();
 	void clearSet();
+	void equalsSet();
 
 private:
 	HANDLE hConsole; // Console window
