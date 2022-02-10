@@ -7,6 +7,7 @@
 #include <ctime>		// Current time for random
 #include <algorithm>	// For generating random string
 #include "Colour.h"		// Colours for the console
+
 class Menu
 {
 public:
